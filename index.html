@@ -8,6 +8,10 @@
 </head>
 <body>
     <script>
+
+            let Pscore = 0;
+            let Cscore = 0;
+
         function getComputerChoice() {
             let x = Math.floor(Math.random() * 3);
             
@@ -27,8 +31,10 @@
             
             if(playerans == "rock") {
                 if(comp == "paper") {
+                    Cscore++;
                     return "You lose! Paper beats Rock!";
                 } else if(comp == "scissors") {
+                    Pscore++;
                     return "You win! Rock beats Scissors!";
                 } else {
                     return "You tie!";
@@ -37,28 +43,41 @@
                 if(comp == "paper") {
                     return "You tie!";
                 } else if(comp == "scissors") {
+                    Cscore++;
                     return "You lose! Scissors beats Paper!";
                 } else {
+                    Pscore++;
                     return "You win! Paper beats Rock!";
                 }
             } else if(playerans == "scissors") {
                 if(comp == "paper") {
+                    Pscore++;
                     return "You win! Scissors beats Paper!";
                 } else if(comp == "scissors") {
                     return "You tie!";
                 } else {
+                    Cscore++;
                     return "You lose! Rock beats Scissors!";
                 }
             }
         }
 
         function game() {
+
             
+            for(let i = 0; i < 5; i++) {
+                const playerSelection = prompt();
+                const computerSelection = getComputerChoice();
+
+                console.log(playRound(computerSelection, playerSelection));
+                console.log("Player score: " + Pscore);
+                console.log("Computer Score: " + Cscore);
+            }
+
         }
 
-        const playerSelection = "ROcK";
-        const computerSelection = getComputerChoice();
-        console.log(playRound(computerSelection, playerSelection));
+        
+        console.log(game());
     </script>
     
 </body>
