@@ -4,18 +4,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>ROCK PAPER SCISSORS</title>
 </head>
 <body>
+    
+    <button class id="rock">Rock!</button>
+    <button class id="paper">Paper!</button>
+    <button class id="scissors">Scissors!</button>
+
+    <div id="container"></div>
     <script>
 
-            let Pscore = 0;
-            let Cscore = 0;
+            
 
         function getComputerChoice() {
             let x = Math.floor(Math.random() * 3);
             
-            console.log(x);
             if(x == 0) {
                 return "rock";
             } else if (x == 1) {
@@ -26,23 +30,24 @@
         }
 
         function playRound(comp, player) {
-
-            let playerans = player.toLowerCase();
+            
+            playerans = player;
+            let compans = getComputerChoice();
             
             if(playerans == "rock") {
-                if(comp == "paper") {
+                if(compans == "paper") {
                     Cscore++;
                     return "You lose! Paper beats Rock!";
-                } else if(comp == "scissors") {
+                } else if(compans == "scissors") {
                     Pscore++;
                     return "You win! Rock beats Scissors!";
                 } else {
                     return "You tie!";
                 }
             } else if(playerans == "paper") {
-                if(comp == "paper") {
+                if(compans == "paper") {
                     return "You tie!";
-                } else if(comp == "scissors") {
+                } else if(compans == "scissors") {
                     Cscore++;
                     return "You lose! Scissors beats Paper!";
                 } else {
@@ -50,10 +55,10 @@
                     return "You win! Paper beats Rock!";
                 }
             } else if(playerans == "scissors") {
-                if(comp == "paper") {
+                if(compans == "paper") {
                     Pscore++;
                     return "You win! Scissors beats Paper!";
-                } else if(comp == "scissors") {
+                } else if(compans == "scissors") {
                     return "You tie!";
                 } else {
                     Cscore++;
@@ -62,22 +67,73 @@
             }
         }
 
+        let Pscore = 0;
+        let Cscore = 0;
+
         function game() {
 
+            let playerSelection;
+            let compSelection;
+
+            const container = document.querySelector('#container');
+            const div2 = document.createElement("div");
+            div2.style.border = "2px solid black";
+
+            const div3 = document.createElement("div");
+            div3.style.border = "2px solid blue";
+
+            const div4 = document.createElement("div");
+            div4.style.border = "2px solid red";
+
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach((button) => {
+                button.addEventListener('click', () => {
+                    
+
+                    const resultText = playRound(compSelection, button.id);
+                    div2.textContent = resultText;
+                    container.appendChild(div2);
+
+                    div3.textContent = "Player: " + Pscore;
+                    container.appendChild(div3);
+                    div4.textContent = "Computer: " + Cscore;
+                    container.appendChild(div4);
+                    
+
+                    if(Pscore >= 5) {
+                        const win = document.createElement("div");
+                        win.styleborder = "5px solid green";
+                        win.textContent = "Player has 5 points! You win the game!";
+                        container.appendChild(win);
+                        Cscore = 0;
+                        Pscore = 0;
+
+                        
+                    }
+                    if (Cscore >= 5) {
+                        const lose = document.createElement("div");
+                        lose.styleborder = "5px solid red";
+                        lose.textContent = "Computer has 5 points! You lose the game!";
+                        container.appendChild(lose);
+                        Cscore = 0;
+                        Pscore = 0;
+
+                        
+                    }
+                });
+            });
             
-            for(let i = 0; i < 5; i++) {
-                const playerSelection = prompt();
-                const computerSelection = getComputerChoice();
-
-                console.log(playRound(computerSelection, playerSelection));
-                console.log("Player score: " + Pscore);
-                console.log("Computer Score: " + Cscore);
-            }
-
+            
         }
 
         
-        console.log(game());
+
+        game();
+        
+        
+
+        
+
     </script>
     
 </body>
